@@ -1,0 +1,154 @@
+/**
+ MIT License
+ Copyright (c) 2017 Apollo Zhu (朱智语).
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
+package io.github.apollozhu.swing;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.beans.ConstructorProperties;
+
+import javax.swing.Action;
+import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.UIManager;
+
+/**
+ * A subclass of JButton with {@link #setBackground(Color)} working on macOS/OS X.
+ * 
+ * @author Apollo Zhu
+ * 
+ * @version 1.0
+ */
+@SuppressWarnings("serial")
+public class AZJButton extends JButton {
+
+	/**
+	 * Creates a button with no set text or icon.
+	 */
+	public AZJButton() {
+		super();
+	}
+
+	/**
+	 * Creates a button where properties are taken from the <code>Action</code>
+	 * supplied.
+	 *
+	 * @param a the <code>Action</code> used to specify the new button
+	 */
+	public AZJButton(Action a) {
+		super(a);
+	}
+
+	/**
+	 * Creates a button with an icon.
+	 *
+	 * @param icon the Icon image to display on the button
+	 */
+	public AZJButton(Icon icon) {
+		super(icon);
+	}
+
+	/**
+	 * Creates a button with text.
+	 *
+	 * @param text the text of the button
+	 */
+	@ConstructorProperties({ "text" })
+	public AZJButton(String text) {
+		super(text);
+	}
+
+	/**
+	 * Creates a button with initial text and an icon.
+	 *
+	 * @param text the text of the button
+	 * @param icon the Icon image to display on the button
+	 */
+	public AZJButton(String text, Icon icon) {
+		super(text, icon);
+	}
+
+	/** SystemLookAndFeelClassName for Apple macOS/OS X. */
+	private static final String APPLE_AQUA_LAF = "com.apple.laf.AquaLookAndFeel";
+
+	/** Control highlight color from Apple's Developer Swatch. */
+	protected static final Color CONTROL_HIGHLIGHT_COLOR = new Color(227, 227, 227);
+
+	/** Grid color from Apple's Developer Swatch. */
+	protected static final Color GRID_COLOR = new Color(203, 203, 203);
+
+	/** Selected control color from Apple's Developer Swatch. */
+	protected static final Color SELECTED_CONTROL_COLOR = new Color(164, 205, 255);
+
+	/**
+	 * Calls the super implementation, unless UIManager is using Apple Aqua Look
+	 * and Feel.
+	 * 
+	 * If it is, and if border is required, and has a different background than
+	 * the default one, the button will be drawn differently to match the actual
+	 * look and feel for a button with background color on OS X Yosemite (10.10)
+	 * and other macOSs above.
+	 *
+	 * @param g the <code>Graphics</code> object to protect
+	 * 
+	 * @see #setBackground(Color)
+	 */
+	@Override
+	public void paintComponent(Graphics g) {
+		final Color backgroundColor = getBackground();
+		final boolean isBorderPainted = isBorderPainted();
+		if (isBorderPainted && UIManager.getSystemLookAndFeelClassName().equals(APPLE_AQUA_LAF)
+				&& !backgroundColor.equals(UIManager.getColor("Button.background"))) {
+
+			setBorderPainted(false);
+			final boolean isOpaque = isOpaque();
+			setOpaque(false);
+
+			boolean isPressed = getModel().isPressed();
+			Insets i = getBorder().getBorderInsets(this);
+			int r = 8, offset = i.top, x = offset, y = offset, w = getWidth() - 2 * offset,
+					h = getHeight() - offset - i.bottom;
+
+			g.setColor(isPressed ? CONTROL_HIGHLIGHT_COLOR : backgroundColor);
+			g.fillRoundRect(x, y, w, h, r, r);
+
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setStroke(new BasicStroke(2));
+			g2.setColor(GRID_COLOR);
+			g2.drawRoundRect(x, y, w, h, r, r);
+
+			if (isPressed || isFocusOwner()) {
+				g2.setColor(SELECTED_CONTROL_COLOR);
+				g2.setStroke(new BasicStroke(3));
+				g2.drawRoundRect(x, y, w, h, r, r);
+			}
+
+			setOpaque(isOpaque);
+		}
+		super.paintComponent(g);
+		setBorderPainted(isBorderPainted);
+	}
+
+}
