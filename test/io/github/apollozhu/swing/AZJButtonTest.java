@@ -9,16 +9,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class AZJButtonTest {
+class AZJButtonTest {
 
 	static final class ColorChanger implements ActionListener {
-		static int random() {
-			return (int) (Math.random() * 255);
-		}
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			((JButton) e.getSource()).setBackground(new Color(random(), random(), random()));
+			((JButton) e.getSource()).setBackground(AZRandomColor.translucent());
 		}
 	}
 
