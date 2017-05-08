@@ -11,6 +11,6 @@ public class AZRandomFont {
 	}
 
 	public static int style() {
-		return (int) (Math.random() * 3);
+		return (int) (Math.random() * 4);
 	}
 }

@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import io.github.apollozhu.awt.AZRandomColor;
@@ -55,7 +54,7 @@ class AZJButtonTest {
 		JFrame frame;
 
 		try {
-//			 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			// UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 		} catch (Exception e) {
 
@@ -71,7 +70,7 @@ class AZJButtonTest {
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//			 UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			// UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 		} catch (Exception e) {
 
 		}
@@ -82,7 +81,7 @@ class AZJButtonTest {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setContentPane(new Panel());
 		frame.setVisible(true);
-		SwingUtilities.updateComponentTreeUI(panel);
+		// SwingUtilities.updateComponentTreeUI(panel);
 	}
 
 }

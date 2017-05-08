@@ -24,6 +24,7 @@ package io.github.apollozhu.swing;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -90,11 +91,14 @@ public class AZJButton extends JButton {
 		super(text, icon);
 	}
 
-	/** Control highlight color from Apple's Developer Swatch. */
-	protected static final Color CONTROL_HIGHLIGHT_COLOR = new Color(227, 227, 227);
+	/** Selected menu item color from Apple's Developer Swatch. */
+	protected static final Color SELECTED_MENU_ITEM_COLOR = new Color(3, 100, 236);
 
-	/** Grid color from Apple's Developer Swatch. */
-	protected static final Color GRID_COLOR = new Color(203, 203, 203);
+	/** Header color from Apple's Developer Swatch. */
+	protected static final Color HEADER_COLOR = new Color(174, 174, 174);
+
+	/** Keyboard focus indicator color from Apple's Developer Swatch. */
+	protected static final Color KEYBOARD_FOCUS_INDICATOR_COLOR = new Color(76, 149, 255);
 
 	/** Selected control color from Apple's Developer Swatch. */
 	protected static final Color SELECTED_CONTROL_COLOR = new Color(164, 205, 255);
@@ -136,7 +140,7 @@ public class AZJButton extends JButton {
 		final boolean hasCustomBackground = !backgroundColor.equals(UIManager.getColor("Button.background"));
 		final boolean isBorderPainted = isBorderPainted();
 		final boolean isOpaque = isOpaque();
-		
+
 		if (isBorderPainted && hasCustomBackground) {
 			final boolean isPressed = getModel().isPressed();
 			Insets i = getBorder().getBorderInsets(this);
@@ -145,19 +149,23 @@ public class AZJButton extends JButton {
 
 			Graphics2D g2 = (Graphics2D) g;
 
-			g2.setColor(isPressed ? CONTROL_HIGHLIGHT_COLOR : backgroundColor);
+			if (isPressed) {
+				int midX = getWidth() / 2;
+				g2.setPaint(new GradientPaint(midX, 0, KEYBOARD_FOCUS_INDICATOR_COLOR, midX, getHeight(), SELECTED_MENU_ITEM_COLOR));
+			} else {
+				g2.setColor(backgroundColor);
+			}
 			g2.fillRoundRect(x, y, w, h, r, r);
 
-			g2.setStroke(new BasicStroke(2));
-			g2.setColor(GRID_COLOR);
+			g2.setColor(HEADER_COLOR);
 			g2.drawRoundRect(x, y, w, h, r, r);
 
 			if (isPressed || isFocusOwner()) {
 				g2.setColor(SELECTED_CONTROL_COLOR);
-				g2.setStroke(new BasicStroke(3));
+				g2.setStroke(new BasicStroke(2));
 				g2.drawRoundRect(x, y, w, h, r, r);
 			}
-			
+
 			super.setBorderPainted(false);
 			super.setOpaque(false);
 		}

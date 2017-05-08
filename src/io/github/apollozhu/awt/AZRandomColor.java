@@ -5,7 +5,7 @@ import java.awt.Color;
 public class AZRandomColor {
 
 	private static int randomComponent() {
-		return (int) (Math.random() * 255);
+		return (int) (Math.random() * 256);
 	}
 
 	private static Color randColorWithAlpha(boolean hasAlpha) {
