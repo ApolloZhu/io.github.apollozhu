@@ -8,6 +8,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+
+import io.github.apollozhu.awt.AZRandomColor;
 
 class AZJButtonTest {
 
@@ -48,12 +52,37 @@ class AZJButtonTest {
 	}
 
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("Set Background for JButton");
+		JFrame frame;
+
+		try {
+//			 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (Exception e) {
+
+		}
+
+		frame = new JFrame("J\"Button\"s with background color");
+		frame.setSize(400, 350);
+		frame.setLocation(650, 200);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Panel panel = new Panel();
+		frame.setContentPane(panel);
+		frame.setVisible(true);
+
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//			 UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (Exception e) {
+
+		}
+
+		frame = new JFrame("Set Background for JButton");
 		frame.setSize(400, 350);
 		frame.setLocation(200, 200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setContentPane(new Panel());
 		frame.setVisible(true);
+		SwingUtilities.updateComponentTreeUI(panel);
 	}
 
 }

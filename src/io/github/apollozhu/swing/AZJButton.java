@@ -8,7 +8,7 @@
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
 
@@ -90,9 +90,6 @@ public class AZJButton extends JButton {
 		super(text, icon);
 	}
 
-	/** SystemLookAndFeelClassName for Apple macOS/OS X. */
-	private static final String APPLE_AQUA_LAF = "com.apple.laf.AquaLookAndFeel";
-
 	/** Control highlight color from Apple's Developer Swatch. */
 	protected static final Color CONTROL_HIGHLIGHT_COLOR = new Color(227, 227, 227);
 
@@ -101,6 +98,19 @@ public class AZJButton extends JButton {
 
 	/** Selected control color from Apple's Developer Swatch. */
 	protected static final Color SELECTED_CONTROL_COLOR = new Color(164, 205, 255);
+
+	/**
+	 * Check if UIManager is using Apple Aqua Look and Feel.
+	 * 
+	 * @return true if current look and feel is aqua.
+	 */
+	private boolean isAquaUI() {
+		try {
+			return getBorder().getClass().getName().contains("Aqua");
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 	/**
 	 * Calls the super implementation, unless UIManager is using Apple Aqua Look
@@ -117,24 +127,27 @@ public class AZJButton extends JButton {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
+		if (!isAquaUI()) {
+			super.paintComponent(g);
+			return;
+		}
+
 		final Color backgroundColor = getBackground();
+		final boolean hasCustomBackground = !backgroundColor.equals(UIManager.getColor("Button.background"));
 		final boolean isBorderPainted = isBorderPainted();
-		if (isBorderPainted && UIManager.getSystemLookAndFeelClassName().equals(APPLE_AQUA_LAF)
-				&& !backgroundColor.equals(UIManager.getColor("Button.background"))) {
-
-			setBorderPainted(false);
-			final boolean isOpaque = isOpaque();
-			setOpaque(false);
-
-			boolean isPressed = getModel().isPressed();
+		final boolean isOpaque = isOpaque();
+		
+		if (isBorderPainted && hasCustomBackground) {
+			final boolean isPressed = getModel().isPressed();
 			Insets i = getBorder().getBorderInsets(this);
 			int r = 8, offset = i.top, x = offset, y = offset, w = getWidth() - 2 * offset,
 					h = getHeight() - offset - i.bottom;
 
-			g.setColor(isPressed ? CONTROL_HIGHLIGHT_COLOR : backgroundColor);
-			g.fillRoundRect(x, y, w, h, r, r);
-
 			Graphics2D g2 = (Graphics2D) g;
+
+			g2.setColor(isPressed ? CONTROL_HIGHLIGHT_COLOR : backgroundColor);
+			g2.fillRoundRect(x, y, w, h, r, r);
+
 			g2.setStroke(new BasicStroke(2));
 			g2.setColor(GRID_COLOR);
 			g2.drawRoundRect(x, y, w, h, r, r);
@@ -144,11 +157,14 @@ public class AZJButton extends JButton {
 				g2.setStroke(new BasicStroke(3));
 				g2.drawRoundRect(x, y, w, h, r, r);
 			}
-
-			setOpaque(isOpaque);
+			
+			super.setBorderPainted(false);
+			super.setOpaque(false);
 		}
+
 		super.paintComponent(g);
-		setBorderPainted(isBorderPainted);
+		super.setBorderPainted(isBorderPainted);
+		super.setOpaque(isOpaque);
 	}
 
 }

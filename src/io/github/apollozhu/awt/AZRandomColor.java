@@ -1,4 +1,4 @@
-package io.github.apollozhu.swing;
+package io.github.apollozhu.awt;
 
 import java.awt.Color;
 
