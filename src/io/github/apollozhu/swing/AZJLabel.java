@@ -22,8 +22,12 @@
  */
 package io.github.apollozhu.swing;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.Icon;
 import javax.swing.JLabel;
+import javax.swing.event.EventListenerList;
 
 /**
  * A subclass of JLabel with {@link #setText(String)} working with \n.
@@ -128,7 +132,8 @@ public class AZJLabel extends JLabel {
 	 * Defines the single line of text this component will display. If the value
 	 * of text is null or empty string, nothing is displayed. If the text
 	 * contains \n, it is converted to <br />
-	 * tag, and the whole text is wrapped around by \<html\> tag.
+	 * tag, and the whole text is wrapped around by \<html\> tag. Then fires an
+	 * action event after text changed.
 	 * <p>
 	 * The default value of this property is null.
 	 * <p>
@@ -145,9 +150,21 @@ public class AZJLabel extends JLabel {
 	 */
 	@Override
 	public void setText(String text) {
-		if (text != null && !text.startsWith("<html>") && !text.endsWith("</html>") && text.contains("\n")) {
+		if (text != null && !text.startsWith("<html>") && !text.endsWith("</html>") && text.contains("\n"))
 			text = "<html>" + text.replaceAll("\n", "<br />") + "</html>";
-		}
 		super.setText(text);
+		if (listenerList != null)
+			for (ActionListener listener : listenerList.getListeners(ActionListener.class))
+				listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "setText"));
+	}
+
+	private EventListenerList listenerList = new EventListenerList();
+
+	public void addActionListener(ActionListener listener) {
+		listenerList.add(ActionListener.class, listener);
+	}
+
+	public void removeActionListener(ActionListener listener) {
+		listenerList.remove(ActionListener.class, listener);
 	}
 }
