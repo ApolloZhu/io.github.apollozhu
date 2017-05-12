@@ -42,8 +42,7 @@ class AZJButtonTest {
 			jBtn.addActionListener(listener);
 			add(jBtn);
 
-			AZJButton btn = new AZJButton(
-					"<html><div style=\"color:white;\">Hello Background by using AZJButton</div></html>");
+			AZJButton btn = new AZJButton("Hello Background by using AZJButton");
 			btn.setBackground(Color.orange);
 			btn.addActionListener(listener);
 			add(btn);

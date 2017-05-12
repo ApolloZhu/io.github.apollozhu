@@ -136,7 +136,7 @@ public class AZJButton extends JButton {
 			return;
 		}
 
-		final Color backgroundColor = getBackground();
+		final Color backgroundColor = getBackground(), foregroundColor = getForeground();
 		final boolean hasCustomBackground = !backgroundColor.equals(UIManager.getColor("Button.background"));
 		final boolean isBorderPainted = isBorderPainted();
 		final boolean isOpaque = isOpaque();
@@ -152,6 +152,7 @@ public class AZJButton extends JButton {
 			if (isPressed) {
 				int midX = getWidth() / 2;
 				g2.setPaint(new GradientPaint(midX, 0, KEYBOARD_FOCUS_INDICATOR_COLOR, midX, getHeight(), SELECTED_MENU_ITEM_COLOR));
+				setForeground(Color.white);
 			} else {
 				g2.setColor(backgroundColor);
 			}
@@ -173,6 +174,7 @@ public class AZJButton extends JButton {
 		super.paintComponent(g);
 		super.setBorderPainted(isBorderPainted);
 		super.setOpaque(isOpaque);
+		super.setForeground(foregroundColor);
 	}
 
 }
