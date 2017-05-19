@@ -22,11 +22,11 @@ public interface AZListenable<Listener extends EventListener> {
 	 * <pre>
 	 * <code>import javax.swing.event.EventListenerList;
 	 * // ...
-	 * private EventListenerList list = new EventListenerList();
+	 *private EventListenerList list = new EventListenerList();
 	 *{@literal @}Override
-	 * public EventListenerList getListenerList() {
-	 *     return list;
-	 * }</code>
+	 *public EventListenerList getListenerList() {
+	 *    return list;
+	 *}</code>
 	 * </pre>
 	 * 
 	 * @return the persisted event listener list.

@@ -2,7 +2,7 @@ package io.github.apollozhu.awt;
 
 import java.awt.Color;
 
-public class AZRandomColor {
+public class AZColor {
 
 	private static int randomComponent() {
 		return (int) (Math.random() * 256);
@@ -13,13 +13,19 @@ public class AZRandomColor {
 	}
 
 	/** @return Color with RGB components. */
-	public static Color opaque() {
+	public static Color randomOpaque() {
 		return randColorWithAlpha(false);
 	}
 
 	/** @return Color with RGBA components. */
-	public static Color translucent() {
+	public static Color randomTranslucent() {
 		return randColorWithAlpha(true);
+	}
+
+	public static boolean isDark(Color color) {
+		double darkness = 1 - (0.299 * color.getRed() + 0.587 * color.getGreen() + 0.114 * color.getBlue()) / 255.;
+		return darkness < 0.5;
+
 	}
 
 }

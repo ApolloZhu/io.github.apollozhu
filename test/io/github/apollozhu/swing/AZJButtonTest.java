@@ -10,14 +10,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-import io.github.apollozhu.awt.AZRandomColor;
+import io.github.apollozhu.awt.AZColor;
 
 class AZJButtonTest {
 
 	static final class ColorChanger implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			((JButton) e.getSource()).setBackground(AZRandomColor.translucent());
+			((JButton) e.getSource()).setBackground(AZColor.randomTranslucent());
 		}
 	}
 
