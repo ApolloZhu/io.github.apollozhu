@@ -1,108 +1,102 @@
 package io.github.apollozhu.swing;
 
-import java.awt.Component;
-import java.awt.GraphicsConfiguration;
-import java.awt.HeadlessException;
-import java.awt.Image;
+import javax.swing.*;
+import java.awt.*;
 import java.lang.reflect.Method;
 import java.util.List;
-
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 
 /**
  * A subclass of JFrame with {@link #setIconImage(Image)} and
  * {@link #setIconImages(List)} working on macOS/OS X.
- * 
+ *
  * @author Apollo Zhu
- * 
  * @version 1.0
  */
 @SuppressWarnings("serial")
 public class AZJFrame extends JFrame {
-	/**
-	 * Constructs a new frame that is initially invisible.
-	 * <p>
-	 * This constructor sets the component's locale property to the value
-	 * returned by <code>JComponent.getDefaultLocale</code>.
-	 *
-	 * @exception HeadlessException if GraphicsEnvironment.isHeadless()
-	 * returns true.
-	 * @see java.awt.GraphicsEnvironment#isHeadless
-	 * @see Component#setSize
-	 * @see Component#setVisible
-	 * @see JComponent#getDefaultLocale
-	 */
-	public AZJFrame() throws HeadlessException {
-		super();
-	}
+    /**
+     * Constructs a new frame that is initially invisible.
+     * <p>
+     * This constructor sets the component's locale property to the value
+     * returned by <code>JComponent.getDefaultLocale</code>.
+     *
+     * @throws HeadlessException if GraphicsEnvironment.isHeadless()
+     *                           returns true.
+     * @see java.awt.GraphicsEnvironment#isHeadless
+     * @see Component#setSize
+     * @see Component#setVisible
+     * @see JComponent#getDefaultLocale
+     */
+    public AZJFrame() throws HeadlessException {
+        super();
+    }
 
-	/**
-	 * Creates a <code>Frame</code> in the specified
-	 * <code>GraphicsConfiguration</code> of
-	 * a screen device and a blank title.
-	 * <p>
-	 * This constructor sets the component's locale property to the value
-	 * returned by <code>JComponent.getDefaultLocale</code>.
-	 *
-	 * @param gc the <code>GraphicsConfiguration</code> that is used
-	 *          to construct the new <code>Frame</code>;
-	 *          if <code>gc</code> is <code>null</code>, the system
-	 *          default <code>GraphicsConfiguration</code> is assumed
-	 * @exception IllegalArgumentException if <code>gc</code> is not from
-	 *          a screen device.  This exception is always thrown when
-	 *      GraphicsEnvironment.isHeadless() returns true.
-	 * @see java.awt.GraphicsEnvironment#isHeadless
-	 * @see JComponent#getDefaultLocale
-	 * @since     1.3
-	 */
-	public AZJFrame(GraphicsConfiguration gc) {
-		super(gc);
-	}
+    /**
+     * Creates a <code>Frame</code> in the specified
+     * <code>GraphicsConfiguration</code> of
+     * a screen device and a blank title.
+     * <p>
+     * This constructor sets the component's locale property to the value
+     * returned by <code>JComponent.getDefaultLocale</code>.
+     *
+     * @param gc the <code>GraphicsConfiguration</code> that is used
+     *           to construct the new <code>Frame</code>;
+     *           if <code>gc</code> is <code>null</code>, the system
+     *           default <code>GraphicsConfiguration</code> is assumed
+     * @throws IllegalArgumentException if <code>gc</code> is not from
+     *                                  a screen device.  This exception is always thrown when
+     *                                  GraphicsEnvironment.isHeadless() returns true.
+     * @see java.awt.GraphicsEnvironment#isHeadless
+     * @see JComponent#getDefaultLocale
+     * @since 1.3
+     */
+    public AZJFrame(GraphicsConfiguration gc) {
+        super(gc);
+    }
 
-	/**
-	 * Creates a new, initially invisible <code>Frame</code> with the
-	 * specified title.
-	 * <p>
-	 * This constructor sets the component's locale property to the value
-	 * returned by <code>JComponent.getDefaultLocale</code>.
-	 *
-	 * @param title the title for the frame
-	 * @exception HeadlessException if GraphicsEnvironment.isHeadless()
-	 * returns true.
-	 * @see java.awt.GraphicsEnvironment#isHeadless
-	 * @see Component#setSize
-	 * @see Component#setVisible
-	 * @see JComponent#getDefaultLocale
-	 */
-	public AZJFrame(String title) throws HeadlessException {
-		super(title);
-	}
+    /**
+     * Creates a new, initially invisible <code>Frame</code> with the
+     * specified title.
+     * <p>
+     * This constructor sets the component's locale property to the value
+     * returned by <code>JComponent.getDefaultLocale</code>.
+     *
+     * @param title the title for the frame
+     * @throws HeadlessException if GraphicsEnvironment.isHeadless()
+     *                           returns true.
+     * @see java.awt.GraphicsEnvironment#isHeadless
+     * @see Component#setSize
+     * @see Component#setVisible
+     * @see JComponent#getDefaultLocale
+     */
+    public AZJFrame(String title) throws HeadlessException {
+        super(title);
+    }
 
-	/**
-	 * Creates a <code>JFrame</code> with the specified title and the
-	 * specified <code>GraphicsConfiguration</code> of a screen device.
-	 * <p>
-	 * This constructor sets the component's locale property to the value
-	 * returned by <code>JComponent.getDefaultLocale</code>.
-	 *
-	 * @param title the title to be displayed in the
-	 *          frame's border. A <code>null</code> value is treated as
-	 *          an empty string, "".
-	 * @param gc the <code>GraphicsConfiguration</code> that is used
-	 *          to construct the new <code>JFrame</code> with;
-	 *          if <code>gc</code> is <code>null</code>, the system
-	 *          default <code>GraphicsConfiguration</code> is assumed
-	 * @exception IllegalArgumentException if <code>gc</code> is not from
-	 *          a screen device.  This exception is always thrown when
-	 *      GraphicsEnvironment.isHeadless() returns true.
-	 * @see java.awt.GraphicsEnvironment#isHeadless
-	 * @see JComponent#getDefaultLocale
-	 * @since     1.3
-	 */
-	public AZJFrame(String title, GraphicsConfiguration gc) {
-		super(title, gc);
-	}
+    /**
+     * Creates a <code>JFrame</code> with the specified title and the
+     * specified <code>GraphicsConfiguration</code> of a screen device.
+     * <p>
+     * This constructor sets the component's locale property to the value
+     * returned by <code>JComponent.getDefaultLocale</code>.
+     *
+     * @param title the title to be displayed in the
+     *              frame's border. A <code>null</code> value is treated as
+     *              an empty string, "".
+     * @param gc    the <code>GraphicsConfiguration</code> that is used
+     *              to construct the new <code>JFrame</code> with;
+     *              if <code>gc</code> is <code>null</code>, the system
+     *              default <code>GraphicsConfiguration</code> is assumed
+     * @throws IllegalArgumentException if <code>gc</code> is not from
+     *                                  a screen device.  This exception is always thrown when
+     *                                  GraphicsEnvironment.isHeadless() returns true.
+     * @see java.awt.GraphicsEnvironment#isHeadless
+     * @see JComponent#getDefaultLocale
+     * @since 1.3
+     */
+    public AZJFrame(String title, GraphicsConfiguration gc) {
+        super(title, gc);
+    }
 
     /**
      * Sets the sequence of images to be displayed as the icon
@@ -127,23 +121,22 @@ public class AZJFrame extends JFrame {
      * window decoration, window list, taskbar, etc.). They could also use
      * just a single image for all contexts or no image at all.
      *
-     * @param     icons the list of icon images to be displayed.
-     * @see       #getIconImages()
-     * @see       #setIconImage(Image)
-     * @since     1.6
+     * @param icons the list of icon images to be displayed.
+     * @see #getIconImages()
+     * @see #setIconImage(Image)
+     * @since 1.6
      */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@Override
-	public synchronized void setIconImages(List<? extends Image> icons) {
-		super.setIconImages(icons);
-		try {
-			Class NSApplication = Class.forName("com.apple.eawt.Application");
-			Method sharedApplication = NSApplication.getMethod("getApplication");
-			Object shared = sharedApplication.invoke(NSApplication);
-			Method setApplicationIconImage = NSApplication.getMethod("setDockIconImage", Image.class);
-			setApplicationIconImage.invoke(shared, getIconImage());
-		} catch (Exception e) {
-		}
-	}
-
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
+    public synchronized void setIconImages(List<? extends Image> icons) {
+        super.setIconImages(icons);
+        try {
+            Class NSApplication = Class.forName("com.apple.eawt.Application");
+            Method sharedApplication = NSApplication.getMethod("getApplication");
+            Object shared = sharedApplication.invoke(NSApplication);
+            Method setApplicationIconImage = NSApplication.getMethod("setDockIconImage", Image.class);
+            setApplicationIconImage.invoke(shared, getIconImage());
+        } catch (Exception e) {
+        }
+    }
 }
