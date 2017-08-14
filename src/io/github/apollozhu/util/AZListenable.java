@@ -46,7 +46,8 @@ public interface AZListenable<Listener extends EventListener> {
 
     default void forEachListener(Consumer<Listener> consumer) {
         for (Listener listener : getListenerList().getListeners(getListenerClass()))
-            consumer.accept(listener);
+            if (listener != null)
+                consumer.accept(listener);
     }
 
 }
